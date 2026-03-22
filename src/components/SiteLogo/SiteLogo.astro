@@ -1,0 +1,16 @@
+---
+import siteData from "@config/siteData.json";
+import logo from "@images/neorama2.png";
+import { Image } from "astro:assets";
+---
+
+<a class="primary-focus flex items-center align-middle" href="/" aria-label="Home" class="">
+	<Image
+    src={logo}
+    alt="Cosmic Themes logo"
+    loading="eager"
+    width={300}
+    height={100}
+    class="max-h-16 w-auto"
+  />
+</a>

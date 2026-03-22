@@ -1,0 +1,139 @@
+---
+interface Props {
+  options?: any;
+}
+const { options = {} } = Astro.props;
+---
+
+<div class="embla">
+  <div class="embla__viewport overflow-hidden">
+    <div class="embla__container flex">
+      <slot />
+    </div>
+  </div>
+
+  <!-- dots -->
+  <div class="embla__dots mt-6 flex justify-center gap-2"></div>
+</div>
+<script>
+  import EmblaCarousel from "embla-carousel";
+
+  const emblaNodes =
+    document.querySelectorAll<HTMLElement>(".embla");
+
+  emblaNodes.forEach((root) => {
+
+    const viewport =
+      root.querySelector<HTMLElement>(
+        ".embla__viewport"
+      );
+
+    const dotsContainer =
+      root.querySelector<HTMLElement>(
+        ".embla__dots"
+      );
+
+    if (!viewport || !dotsContainer) return;
+
+    const embla =
+      EmblaCarousel(viewport, {
+        loop: false,
+        align: "center"
+      });
+
+    const buildDots = () => {
+
+      const snaps =
+        embla.scrollSnapList();
+
+      dotsContainer.innerHTML =
+        snaps.map((_, i) => `
+          <button
+            class="embla__dot"
+            data-index="${i}"
+          ></button>
+        `).join("");
+
+      const dots =
+        dotsContainer.querySelectorAll(".embla__dot");
+
+      dots.forEach((dot, index) => {
+
+        dot.addEventListener(
+          "click",
+          () => embla.scrollTo(index)
+        );
+
+      });
+
+      const updateDots = () => {
+
+        dots.forEach((dot, i) => {
+
+          dot.classList.toggle(
+            "is-active",
+            i === embla.selectedScrollSnap()
+          );
+
+        });
+
+      };
+
+      embla.on("select", updateDots);
+
+      updateDots();
+
+    };
+
+    buildDots();
+
+    /* update when screen size changes */
+
+    window.addEventListener(
+      "resize",
+      () => {
+
+        embla.reInit();
+
+        buildDots();
+
+      }
+    );
+
+  });
+</script>
+
+<style>
+.embla__container > * {
+  flex: 0 0 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 768px) {
+  .embla__container > * {
+    flex: 0 0 50%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .embla__container > * {
+    flex: 0 0 33.333%;
+  }
+}
+
+/* dots */
+
+.embla__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #d1d5db;
+  transition: 0.3s;
+}
+
+.embla__dot.is-active {
+  background: #111827;
+  transform: scale(1.2);
+}
+</style>

@@ -1,0 +1,65 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  images: ImageMetadata[];
+}
+
+const { images = [] } = Astro.props;
+---
+
+<div class="marquee">
+
+  <div class="marquee-track">
+
+    {images.concat(images).map((img) => (
+
+      <div class="marquee-item">
+
+        <Image
+          src={img}
+          alt=""
+          height={160}
+          class="h-40 w-auto object-cover"
+        />
+
+      </div>
+
+    ))}
+
+  </div>
+
+</div>
+
+<style>
+.marquee {
+  overflow: hidden;
+}
+
+.marquee-track {
+  display: flex;
+  gap: 2rem;
+  width: max-content;
+  animation: scroll 40s linear infinite;
+}
+
+.marquee-item {
+  flex: 0 0 auto;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes scroll {
+
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+
+}
+</style>

@@ -1,0 +1,65 @@
+---
+import About from "@components/About/About.astro";
+import Button from "@components/Button/Button.astro";
+import Contact from "@components/Contact/Contact.astro";
+import FeatureNumbers from "@components/Feature/FeatureNumbers.astro";
+// components
+import Hero from "@components/Hero/Hero.astro";
+import PortfolioThreeCards from "@components/Portfolio/PortfolioThreeCards.astro";
+import PricingThreeCards from "@components/Pricing/PricingThreeCards.astro";
+import Testimonials from "@components/Testimonials/Testimonials.astro";
+// data
+import siteData from "@config/siteData.json";
+// layout
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ImageMarquee from "@components/ImageMarquee/ImageMarquee.astro";
+import seals from "@assets/images/3.webp";
+import house1 from "@assets/images/home view 3.webp";
+import agean from "@assets/images/agean.png";
+import r1 from "@assets/images/R1.webp"
+import what from "@assets/images/R2.webp"
+import r2 from "@assets/images/R4.webp"
+import r4 from "@assets/images/Landscape1.webp"
+import ho from "@assets/images/Home View 3.webp"
+import anoth from "@assets/images/Image2.webp"
+
+
+const images = [
+  seals,
+  house1,
+  agean, r1, what, r2, r4, ho,anoth
+];
+---
+
+<BaseLayout title={siteData.title} description={siteData.description} navStartStyle="white">
+	<Hero />
+		<FeatureNumbers />
+		<div  class="flex flex-col gap-3 text-center bg-primary-200">
+				<div class="mt-2 mb-2 flex justify-center">
+		<Button href="/#contact" variant="secondary" class="px-8">Contact</Button>
+	</div>
+		</div>
+		<PricingThreeCards />
+	<Testimonials />
+
+		<div  class="  flex flex-col text-center bg-primary-200 ">
+				<div class="mt-16 mb-16  justify-center">
+								<h2 class="h3">Learn more about our proffessional team</h3>
+				<div class="mt-6 flex justify-center  ">
+		<Button href="/about" variant="secondary" class="px-8">About Us</Button>
+
+	</div>
+					<div class="mt-1 flex justify-center   ">
+
+				<Button href="/project" variant="secondary" class="px-8">About the Project</Button>
+
+</div>
+			</div>
+						</div>
+
+
+				<ImageMarquee images={images} />
+
+	<Contact />
+
+</BaseLayout>

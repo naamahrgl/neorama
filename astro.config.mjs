@@ -52,5 +52,10 @@ export default defineConfig({
 		build: {
 			assetsInlineLimit: 0,
 		},
+		resolve: {
+      alias: {
+        "@assets": new URL("./src/assets", import.meta.url)
+      }
+    }
 	},
 });

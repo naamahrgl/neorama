@@ -13,11 +13,11 @@ const { largeText, description, ...rest } = Astro.props as Props;
 ---
 
 <div {...rest} class="flex flex-col gap-3 text-center">
-	<h3 class="font-decorative text-primary-500 text-[8rem] leading-none">
+	<h3 class="font-decorative text-primary-500 text-[6rem] leading-none">
 		{largeText}
 	</h3>
 
-	<p class="description font-heading-1 pr-2 text-2xl">
+	<p class="description font-heading-1 pr-2 text-xl">
 		{description}
 	</p>
 </div>

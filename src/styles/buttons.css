@@ -12,7 +12,7 @@
 }
 
 .button--secondary {
-	@apply bg-primary-200 text-base-900 border-primary-50 border-2;
+	@apply bg-primary-200 text-base-900 border-base-900 border-2;
 	@apply hover:bg-primary-50;
 	@apply focus-visible:ring-base-900;
 }

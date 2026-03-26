@@ -1,0 +1,46 @@
+---
+import About from "@components/About/About.astro";
+import Button from "@components/Button/Button.astro";
+import Contact from "@components/Contact/Contact.astro";
+import FeatureNumbers from "@components/Feature/FeatureNumbers.astro";
+// components
+import Hero from "@components/Hero/Hero.astro";
+import PortfolioThreeCards from "@components/Portfolio/PortfolioThreeCards.astro";
+import PricingThreeCards from "@components/Pricing/PricingThreeCards.astro";
+import Testimonials from "@components/Testimonials/Testimonials.astro";// data
+import siteData from "@config/siteData.json";
+// layout
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ImageMarquee from "@components/ImageMarquee/ImageMarquee.astro";
+import seals from "@assets/images/3.webp";
+import agean from "@assets/images/agean.png";
+import r1 from "@assets/images/R1.webp"
+import what from "@assets/images/R2.webp"
+import r2 from "@assets/images/R4.webp"
+import r4 from "@assets/images/Landscape1.webp"
+import ho from "@assets/images/HomeView3.webp"
+import anoth from "@assets/images/Image2.webp"
+
+
+const images = [
+  seals,
+  agean, r1, what, r2, r4, ho,anoth
+];
+---
+
+<BaseLayout title={siteData.title} description={siteData.description} navStartStyle="white">
+		<div  class="  flex flex-col text-center ">
+				<div class="mt-16 mb-16  justify-center">
+
+	<About />
+
+
+
+
+	<Contact />
+            </div>
+        </div>
+
+
+        </div>
+</BaseLayout>

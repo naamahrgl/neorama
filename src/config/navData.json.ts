@@ -19,7 +19,7 @@ const navConfig: navItem[] = [
 	},
 	{
 		text: "The Project",
-		link: "/Project/",
+		link: "/project/",
 	},
 	{
 		text: "Specifications",

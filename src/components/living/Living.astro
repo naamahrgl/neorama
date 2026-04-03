@@ -1,0 +1,126 @@
+---
+import profileImage from "@assets/images/Neorama.png";
+import thsa from "@assets/images/thsa.png";
+import ocn from "@assets/images/ocn.png";
+import three from "@assets/images/3.webp";
+import play from "@assets/images/Playground12.png";
+
+
+
+import { Image } from "astro:assets";
+
+const blocks = [
+  {
+    title: "INTERNATIONAL MODERN VILLAGE",
+    text: "The 'International Village in Northern Greece' project was born as an initiative to establish a vibrant community of Expats and Greeks close to the city of Thessaloniki, modeled after a Greek mediterranean village and combining the peace and landscapes of the countryside with all the comforts and amenities of a modern lifestyle. Communal life will center around shared open spaces for community venues for culture, education, sports, commerce and even agricultural projects. Families and individuals of all ages and backgrounds are welcome to apply.",
+image: three 
+ },
+
+  {
+    title: "THESSALONIKI: EXPAT CAPITAL",
+    text: "Living within about 30 minutes of Thessaloniki gives expat families the peace, space, and slower rhythm of countryside living, while keeping the city’s rich offerings close at hand. Thessaloniki adds real depth to daily life through its vibrant culture, long history, lively food scene, shopping, cafés, music, festivals, museums, and waterfront atmosphere, along with the practical advantages of a major urban center such as access to worldclass healthcare, education, and top services. For families, it creates a rare balance: a calmer home environment without giving up the energy, character, and opportunities of one of Greece’s most dynamic cities." ,
+image: thsa
+ },
+
+  {
+    title: "MODERN VILLAGE LIFESTYLE",
+    text: "Neorama offers a range of housing models designed to suit different family sizes and lifestyles, while keeping the same core promise of privacy, space, and high quality. From the more compact Alpha model to the larger and customizable Olympus homes, each option combines modern design, custom interior planning, generous living areas, and large private plots (2,000 sq.m+) , giving families the freedom to choose a home that matches both their practical needs and their long-term vision for countryside living in the village.",
+image: ocn
+ 
+},
+
+  {
+    title: "COMMUNITY VENUES",
+    text: "Dedicated land within the project will be reserved for shared community use, creating spaces that bring families together in everyday life. These areas may include community parks and gardens, sports facilities, food trucks, and venues for culture, learning, and family activities—adding a social and vibrant layer to the residential experience.",
+image: play
+ 
+}
+];
+---
+
+<section
+  id="living"
+  class="site-container scroll-mt-2 py-4 md:py-8"
+>
+
+  <h2 class="h3 text-primary-500 uppercase mb-2 md:mb-4">
+    Life Near Thessaloniki
+  </h2>
+
+  <div class="space-y-2 md:space-y-4">
+
+    {blocks.map(block => (
+
+      <div
+        class="
+          grid
+          md:grid-cols-3
+          gap-4
+          items-center
+        "
+      >
+
+        {/* text */}
+        <div class="md:col-span-2">
+
+          <h3 class="h2 mb-6">
+            {block.title}
+          </h3>
+
+          <div
+            class="
+              bg-base-100
+              p-8
+              lg:text-lg
+            "
+          >
+
+            <p>
+              {block.text}
+            </p>
+
+          </div>
+
+        </div>
+
+
+        {/* image */}
+        <div
+          class="
+            w-full
+            max-w-md
+            mx-auto
+          "
+        >
+
+          <div
+            class="
+              aspect-[3/4]
+              overflow-hidden
+              rounded-xl
+            "
+          >
+
+            <Image
+              src={block.image}
+              alt="Neorama"
+              width={450}
+              densities={[1.5, 2]}
+              class=" 
+			  w-full
+			  h-full
+                object-cover
+              "
+            />
+
+          </div>
+
+        </div>
+
+      </div>
+
+    ))}
+
+  </div>
+
+</section>

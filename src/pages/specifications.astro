@@ -1,0 +1,24 @@
+---
+import Contact from "@components/Contact/Contact.astro";
+import Specs from "@components/Specs/Specs.astro"
+import siteData from "@config/siteData.json";
+// layout
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+---
+
+<BaseLayout title={siteData.title} description={siteData.description} navStartStyle="white">
+		<div  class="  flex flex-col text-center ">
+				<div class="mt-16 mb-16  justify-center">
+	<Specs />
+
+
+
+
+	<Contact />
+            </div>
+        </div>
+
+
+        </div>
+</BaseLayout>

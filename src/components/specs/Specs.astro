@@ -1,0 +1,223 @@
+---
+import home from "@assets/images/HomeView1.webp";
+import r2 from "@assets/images/R2.webp";
+import three from "@assets/images/3.webp";
+import play from "@assets/images/Playground12.png";
+import Button from "@components/Button/Button.astro";
+import Carousel from "@components/Carousel/Carousel.astro";
+import profileImage from "@assets/images/proj.webp";
+
+import image3 from "@assets/images/olympus.png";
+import image1 from "@assets/images/HomeView3.webp";
+import image2 from "@assets/images/agean.png";
+
+
+import { Image } from "astro:assets";
+
+const blocks = [
+  {
+    title: "CONSTRUCTION PROCESS",
+    text: "Neorama is designed to offer a high standard of construction in accordance with EU Regulations for the A+ KENAK Quality, combining modern architectural planning, custom interior design, and thoughtfully built homes tailored to each family’s needs. The process is structured in clear stages—from plot selection and home model choice, through design and professional planning, to construction and final delivery—supported by a multidisciplinary team of architects, surveyors, legal advisers, and development professionals. This staged approach gives families both quality assurance and a clearer path from vision to finished home.",
+    image: profileImage 
+ },
+
+  {
+    title: "Custom Made Interior Design",
+    text: "All house models enable a completely customizable interior design, to fit the vision of each incoming family for their new home. The interior design process starts immediately with the signing of the contract, spanning all aspects of the home from choice of materials and styles, to the furnishing plan. ",
+    image: r2
+ },
+  {
+    title: "STANDARD ALPHA HOME MODEL",
+    text: "The Alpha model is the most popular choice and an excellent fit for couples, young families, or those who want a more manageable home without giving up comfort, privacy, or land. It offers a 110 m² house on a 2,000 m² plot, with 3 bedrooms, 2 bathrooms, a kitchen, living room, veranda, and storage, making it especially attractive for families seeking a practical, cost-effective well-designed countryside home. With a basement (optional), total size can reach up to 170 sq.m living space.",
+      image: home
+ },
+];
+
+interface pricingItem {
+	name: string; // plan name
+	featured?: boolean; // if true, will be highlighted or otherwise featured
+	price: string;
+	features: string[]; // list of features
+	image: ImageMetadata; // imported image
+}
+
+
+// This is designed for 3 pricing items, but can be modified to support more
+const pricingData: pricingItem[] = [
+	{
+		name: "Alpha",
+		featured: true,
+		price: "285,000",
+		features: [
+			 "2,000 sqm plot of land with a 110 sqm home.",
+"Custom interior design: 3 bedrooms, 2 bathrooms, kitchen, living room, veranda, storage."
+
+		],
+		image: image1,
+	},
+	{
+		name: "Agean",
+		featured: true,
+		price: "455,000",
+		features: [
+						 			 "2,000 sqm plot of land with a 140 sqm home.",
+"Custom interior design: 3-4 bedrooms, 2 bathrooms, kitchen, living room, veranda, storage."
+
+
+		],
+		image: image2,
+	},
+	{
+		name: "Olympus",
+		featured: true,
+		price: "535,000",
+		features: [
+			 			 "4,000 sqm plot of land with a 180 sqm home",
+						 "Custom interior design: 4-5 bedrooms, 2-3 bathrooms, kitchen, living room, veranda, balcony, storage."
+
+
+		],
+		image: image3,
+	},
+];
+---
+
+<section
+  id="specifications"
+  class="site-container scroll-mt-2 py-4 md:py-8"
+>
+
+  <h2 class="h3 text-primary-500 uppercase mb-2 md:mb-4">
+    FULL  TURNKEY CONSTRUCTION
+  </h2>
+
+  <div class="space-y-6 md:space-y-4">
+
+    {blocks.map(block => (
+
+      <div
+        class="
+          grid
+          md:grid-cols-3
+          gap-4
+          items-center
+        "
+      >
+
+        {/* text */}
+        <div class="md:col-span-2">
+
+          <h3 class="h2 mb-6">
+            {block.title}
+          </h3>
+
+          <div
+            class="
+              bg-base-100
+              p-8
+              lg:text-lg
+            "
+          >
+
+            <p>
+              {block.text}
+            </p>
+
+          </div>
+
+        </div>
+
+
+        {/* image */}
+        <div
+          class="
+            w-full
+            max-w-md
+            mx-auto
+          "
+        >
+
+          <div
+            class="
+              aspect-[3/4]
+              overflow-hidden
+              rounded-xl
+            "
+          >
+
+            <Image
+              src={block.image}
+              alt="Neorama"
+              width={450}
+              densities={[1.5, 2]}
+              class=" 
+			  w-full
+			  h-full
+                object-cover
+              "
+            />
+
+          </div>
+
+        </div>
+
+      </div>
+
+    ))}
+
+  </div>
+  <div class="mt-4">
+
+  <Carousel>
+{
+  pricingData.map((plan) => (
+
+    <div class="px-4 flex h-full">
+
+      <div class="flex w-full flex-col overflow-hidden  bg-base-100 shadow-lg">
+
+        <!-- image -->
+        <div class="h-64 w-full overflow-hidden">
+          <Image
+            src={plan.image}
+            alt={plan.name}
+            width={600}
+            class="h-full w-full object-cover"
+          />
+        </div>
+
+        <!-- content -->
+        <div class="flex flex-1 flex-col justify-between p-8">
+
+          <div>
+
+            <h3 class="h2 text-center">
+              {plan.name}
+            </h3>
+
+            <ul class="mt-4 space-y-3">
+              {plan.features.map((feature) => (
+                <li class="text-base leading-snug">
+                  {feature}
+                </li>
+              ))}
+            </ul>
+
+          </div>
+
+          <p class="mt-8 text-center text-[2rem] font-medium">
+            €{plan.price}
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  ))
+}
+</Carousel>
+
+</div>
+</section>

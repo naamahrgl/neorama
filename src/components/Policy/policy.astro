@@ -1,0 +1,95 @@
+---
+/**
+ * * Privacy Policy Section
+ */
+import profileImage from "@assets/images/proj.webp";
+import { Image } from "astro:assets";
+
+const blocks = [
+  {
+    title: "Privacy Policy",
+    image: profileImage,
+    // Using backticks allows for multi-line text
+    text: `
+      Privacy Policy - Neorama
+      Last updated: 22.3.2026
+
+      Neorama (“Neorama”, “we”, “us”, or “our”) respects your privacy and is committed to protecting your personal data. This Privacy Policy explains how we collect, use, disclose, store, and otherwise process personal data when you visit our website, contact us, submit information through our forms, or otherwise interact with us online. This Policy is intended to provide the information required under the General Data Protection Regulation (Regulation (EU) 2016/679 - GDPR) and applicable Greek data protection law.
+
+      1. Data Controller
+      The controller responsible for the processing of personal data through this website is:
+      Neorama Estates IKE
+      Registered address: Fanariou 22, Kalamaria, Greece
+      Email: orri@neorama.org
+
+      2. Personal Data We May Collect
+      Depending on how you interact with our website, we may collect and process the following categories of personal data:
+      • Contact and identification data: Name, email, phone number, country, company, job title.
+      • Communications data: Content of messages, inquiries, meeting requests.
+      • Technical and usage data: IP address, browser type, device type, operating system.
+      • Cookie and tracker-related data: Information collected through pixels and tracking mechanisms.
+
+      3. How We Collect Personal Data
+      We collect data directly from you (forms/communications), automatically via cookies, and from service providers helping us operate the website.
+
+      4. Purposes of Processing and Legal Bases
+      We process data to respond to inquiries, operate the website, improve user experience, send marketing updates (with consent), and comply with legal obligations.
+
+      5. Whether You Must Provide the Data
+      Providing data is voluntary, but refusal may prevent us from responding to inquiries or providing requested information.
+
+      6. Recipients of Personal Data
+      We may share data with hosting providers, CRM platforms, analytics services, legal advisors, or public authorities where required by law.
+
+      7. International Transfers
+      Data is primarily processed in the EEA. Transfers outside the EEA occur only under lawful mechanisms like Standard Contractual Clauses.
+
+      8. Data Retention
+      We retain data only as long as necessary for the purposes outlined or as required by Greek law.
+
+      9. Cookies and Trackers
+      We use cookies for site functionality and analytics. You can manage these through your browser or our consent banner.
+
+      10. Your Rights
+      Under GDPR, you have the right to access, rectify, erase, or object to the processing of your data. To exercise these rights, contact: orri@neorama.org.
+
+      11. Data Security
+      We implement technical measures to protect your data, though no internet transmission is 100% secure.
+
+      12. Contact Us
+      Neorama Estates IKE
+      Email: orri@neorama.org
+    `
+  },
+];
+---
+
+<section id="policy" class="site-container scroll-mt-2 py-4 md:py-8">
+  <div class="space-y-6 md:space-y-4">
+    {blocks.map(block => (
+      <div class="grid md:grid-cols-1 gap-6 lg:gap-12 items-start">
+        <div>
+          <h3 class="h2 mb-6">{block.title}</h3>
+          
+          <div class="bg-base-100 p-8 lg:p-10 lg:text-lg shadow-sm border border-base-200 rounded-sm">
+            {block.text.split('\n').map((line) => {
+              const trimmedLine = line.trim();
+              
+              // Skip empty lines
+              if (!trimmedLine) return <br />;
+
+              // Regex to check if the line starts with a number followed by a dot (e.g., "1. ")
+              const isSectionTitle = /^\d+\./.test(trimmedLine);
+
+              return (
+                <p class={`mb-4 whitespace-pre-line ${isSectionTitle ? 'font-bold text-xl mt-6' : ''}`}>
+                  {trimmedLine}
+                </p>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

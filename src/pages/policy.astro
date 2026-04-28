@@ -1,11 +1,11 @@
 ---
 import Contact from "@components/Contact/Contact.astro";
-import Livingcomp from "@components/living/Living.astro"
+import Projectfile from "../components/Policy/policy.astro"
 import siteData from "@config/siteData.json";
 // layout
 import BaseLayout from "@layouts/BaseLayout.astro";
 import ImageMarquee from "@components/ImageMarquee/ImageMarquee.astro";
-import seals from "@assets/images/3.jpeg";
+import seals from "@assets/images/3.webp";
 import agean from "@assets/images/agean.png";
 import r1 from "@assets/images/R1.webp"
 import what from "@assets/images/R2.webp"
@@ -13,6 +13,7 @@ import r2 from "@assets/images/R4.webp"
 import r4 from "@assets/images/Landscape1.webp"
 import ho from "@assets/images/HomeView3.webp"
 import anoth from "@assets/images/Image2.webp"
+
 
 const images = [
   seals,
@@ -23,7 +24,8 @@ const images = [
 <BaseLayout title={siteData.title} description={siteData.description} navStartStyle="white">
 		<div  class="  flex flex-col text-center ">
 				<div class="mt-16 mb-16  justify-center">
-	<Livingcomp />
+
+	<Projectfile />
 
 
 

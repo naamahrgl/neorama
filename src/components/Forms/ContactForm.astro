@@ -3,38 +3,63 @@ import Button from "@components/Button/Button.astro";
 ---
 
 <form id="contact-form" name="contact form" class="flex h-full flex-col justify-between gap-4">
-	<input type="hidden" name="form-name" value="contact" />
-	<div>
-		<label for="contact-name" class="font-heading-1 text-lg uppercase">Your Name</label>
-		<input type="text" class="form__input border-primary-200" name="name" id="contact-name" placeholder="" required />
-	</div>
-	<div class="flex flex-col gap-1">
-		<label for="contact-email" class="font-heading-1 text-lg uppercase">Contact E-mail </label>
-		<input
-			type="email"
-			class="form__input  border-primary-200"
-			name="email"
-			id="contact-email"
-			inputmode="email"
-			placeholder=""
-			required
-		/>
-	</div>
-	<div>
-		<label for="contact-phone" class="font-heading-1 text-lg uppercase">Phone </label>
-		<input  class="form__input  border-primary-200" name="phone" id="phone" placeholder="" required />
-	</div>
-	<div>
-		<label for="contact-message" class="font-heading-1 text-lg uppercase">Message </label>
-		<textarea
-			name="message"
-			class="form__input  border-primary-200"
-			id="contact-message"
-			rows="6"
-			placeholder=""
-			required></textarea>
-	</div>
-	<div class="flex">
-		<Button variant="primary" type="submit" class="w-full px-10 md:w-fit">Submit</Button>
-	</div>
+    <input type="hidden" name="form-name" value="contact" />
+    
+    <div>
+        <label for="contact-name" class="font-heading-1 text-lg uppercase">Your Name</label>
+        <input type="text" class="form__input border-primary-200" name="name" id="contact-name" placeholder="" required />
+    </div>
+
+    <div class="flex flex-col gap-1">
+        <label for="contact-email" class="font-heading-1 text-lg uppercase">Contact E-mail</label>
+        <input
+            type="email"
+            class="form__input border-primary-200"
+            name="email"
+            id="contact-email"
+            inputmode="email"
+            placeholder=""
+            required
+        />
+    </div>
+
+    <div>
+        <label for="contact-phone" class="font-heading-1 text-lg uppercase">Phone (Optional)</label>
+        <input class="form__input border-primary-200" name="phone" id="phone" placeholder="" />
+    </div>
+
+    <div>
+        <label for="contact-message" class="font-heading-1 text-lg uppercase">Message</label>
+        <textarea
+            name="message"
+            class="form__input border-primary-200"
+            id="contact-message"
+            rows="6"
+            placeholder=""
+            required></textarea>
+    </div>
+
+    <div class="space-y-3 mt-4">
+        <div class="flex items-start gap-3">
+            <input 
+                type="checkbox" 
+                name="marketing_consent" 
+                id="marketing_consent" 
+                class="mt-1 h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+            />
+            <label for="marketing_consent" class="text-sm text-gray-600 leading-tight">
+                I would like to receive updates on new real estate projects and market news from Neorama.
+            </label>
+        </div>
+
+        <p class="text-xs text-gray-500 leading-normal">
+            By submitting this form, you acknowledge that your data will be processed in accordance with our 
+            <a href="/policy" class="underline hover:text-primary-600">Privacy Policy</a> 
+            to respond to your inquiry.
+        </p>
+    </div>
+
+    <div class="flex mt-2">
+        <Button variant="primary" type="submit" class="w-full px-10 md:w-fit">Submit Request</Button>
+    </div>
 </form>

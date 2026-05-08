@@ -20,7 +20,7 @@ const siteData: SiteDataProps = {
 	// Your website's title and description (meta fields)
 	title: "The way life should be lived",
 	description:
-		"Experience the quality of village life in Northern Greece with a vibrant international community just outside Thessaloniki",
+		"Experience the quality of modern village life in Northern Greece with a vibrant Greek and International community near Thessaloniki",
 	useViewTransitions: true,
 	// Your information!
 	author: {

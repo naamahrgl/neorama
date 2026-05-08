@@ -18,9 +18,9 @@ export interface SiteDataProps {
 const siteData: SiteDataProps = {
 	name: "Neorama",
 	// Your website's title and description (meta fields)
-	title: "The way life should be lived",
+	title: "Nearoma - International Village Thessaloniki",
 	description:
-		"Experience the quality of modern village life in Northern Greece with a vibrant Greek and International community near Thessaloniki",
+		"The way life should be lived - Experience the quality of modern village life in Northern Greece with a vibrant Greek and International community near Thessaloniki",
 	useViewTransitions: true,
 	// Your information!
 	author: {

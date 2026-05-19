@@ -115,6 +115,6 @@ const pricingData: pricingItem[] = [
 </Carousel>
 
 	<div class="mt-12 flex justify-center">
-		<Button href="/specifications" variant="outline" class="px-8"         onclick="if(window.gtag) { window.gtag('event', 'click_specs_button', { 'location': 'pricing_section' }); }">Learn More</Button>
+		<Button href="/specifications" variant="outline" class="px-8"         onclick="if(typeof gtag !== 'undefined') { gtag('event', 'click_specs_button', { 'location': 'pricing_section' }); }">Learn More</Button>
 	</div>
 </section>

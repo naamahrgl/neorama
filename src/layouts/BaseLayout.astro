@@ -29,28 +29,7 @@ const {
 <!doctype html>
 <html lang="en" transition:animate="fade">
 	<head>
-			<!-- Google tag (gtag.js) -->
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-YPEJ0NE4SZ"></script>
-<script>
-  // 1. Tell TypeScript that dataLayer and gtag safely exist on the window object
-  declare global {
-    interface Window {
-      dataLayer: any[];
-      gtag: (...args: any[]) => void;
-    }
-  }
 
-  // 2. Initialize using the explicitly typed window properties
-  window.dataLayer = window.dataLayer || [];
-  
-  window.gtag = function gtag(...args: any[]) {
-    window.dataLayer.push(args);
-  }
-
-  window.gtag('js', new Date());
-  window.gtag('config', 'G-YPEJ0NE4SZ');
-</script>
 		<BaseHead
 			type={type}
 			title={title}
@@ -58,7 +37,14 @@ const {
 			image={heroImage ? heroImage : undefined}
 			noindex={noindex}
 		/>
-
+			<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YPEJ0NE4SZ"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YPEJ0NE4SZ');
+    </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   

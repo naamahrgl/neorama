@@ -29,6 +29,28 @@ const {
 <!doctype html>
 <html lang="en" transition:animate="fade">
 	<head>
+			<!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YPEJ0NE4SZ"></script>
+<script>
+  // 1. Tell TypeScript that dataLayer and gtag safely exist on the window object
+  declare global {
+    interface Window {
+      dataLayer: any[];
+      gtag: (...args: any[]) => void;
+    }
+  }
+
+  // 2. Initialize using the explicitly typed window properties
+  window.dataLayer = window.dataLayer || [];
+  
+  window.gtag = function gtag(...args: any[]) {
+    window.dataLayer.push(args);
+  }
+
+  window.gtag('js', new Date());
+  window.gtag('config', 'G-YPEJ0NE4SZ');
+</script>
 		<BaseHead
 			type={type}
 			title={title}
@@ -36,7 +58,16 @@ const {
 			image={heroImage ? heroImage : undefined}
 			noindex={noindex}
 		/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Pulling in Satoshi-like modernism (via DM Sans/Tenor) -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Tenor+Sans&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+
 	</head>
+
+
 	<body id="body" class="bg-base-50 text-base-900">
 		<div class="min-h-[100lvh]">
 			<Nav startStyle={navStartStyle} />

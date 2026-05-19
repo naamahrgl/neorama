@@ -32,6 +32,6 @@ const firstThreeTestimonials = sortedTestimonials.slice(0, 3);
 		<TestimonialCard testimonial={firstThreeTestimonials[2]} imagePosition="top" />
 	</div>
 			<div class="mt-12 flex justify-center">
-		<Button href="/living" variant="outline" class="px-8">Life near Thessaloniki</Button>
+		<Button href="/living" variant="outline" class="px-8"         onclick="if(window.gtag) { window.gtag('event', 'click_living_button', { 'location': 'living_section' }); }">Life near Thessaloniki</Button>
 	</div>
 </section>

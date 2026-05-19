@@ -60,7 +60,7 @@ import Button from "@components/Button/Button.astro";
     </div>
 
     <div class="flex flex-col gap-2 mt-2">
-        <Button variant="primary" type="submit" class="w-full px-10 md:w-fit">Submit Request</Button>
+        <Button variant="primary" type="submit" class="w-full px-10 md:w-fit"         onclick="if(window.gtag) { window.gtag('event', 'submit_contact_button', { 'location': 'contact_section' }); }">Submit Request</Button>
         <p id="form-status" class="hidden text-sm font-medium pt-2"></p>
     </div>
 </form>

@@ -66,51 +66,56 @@ import Button from "@components/Button/Button.astro";
 </form>
 
 <script>
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbw-qfBOVsI6tWygsjZAZ1WBM04M2pq7v0QjSlwktXuCFwz_7YnJxklMTgPf8O_TOjJV/exec';
-    const form = document.getElementById('contact-form') as HTMLFormElement;
-    const status = document.getElementById('form-status');
-    // Find the button inside the form without needing an ID on the component itself
-    const btn = form?.querySelector('button[type="submit"]') as HTMLButtonElement;
+    // 1. Wrap the entire listener setup inside the page-load event
+    document.addEventListener('astro:page-load', () => {
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbw-qfBOVsI6tWygsjZAZ1WBM04M2pq7v0QjSlwktXuCFwz_7YnJxklMTgPf8O_TOjJV/exec';
+        const form = document.getElementById('contact-form') as HTMLFormElement;
+        const status = document.getElementById('form-status');
+        const btn = form?.querySelector('button[type="submit"]') as HTMLButtonElement;
 
-    form?.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        if(btn) btn.innerText = "Sending...";
+        // If the form doesn't exist on the current page, exit early safely
+        if (!form) return;
 
-        const formData = new FormData(form);
-        const payload = {
-            name: formData.get('name'),
-            email: formData.get('email'),
-            phone: formData.get('phone'),
-            message: formData.get('message'),
-            marketing_consent: formData.get('marketing_consent') === 'on'
-        };
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Now guaranteed to run every time!
+            if(btn) btn.innerText = "Sending...";
 
-        try {
-            await fetch(WEB_APP_URL, {
-                method: 'POST',
-                mode: 'no-cors', 
-                cache: 'no-cache',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
+            const formData = new FormData(form);
+            const payload = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                message: formData.get('message'),
+                marketing_consent: formData.get('marketing_consent') === 'on'
+            };
 
-            form.reset();
-            
-            if(status) {
-                status.innerText = "Thank you! We'll be in touch.";
-                status.classList.remove('hidden', 'text-red-600');
-                status.classList.add('text-green-600');
+            try {
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', 
+                    cache: 'no-cache',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                form.reset();
+                
+                if(status) {
+                    status.innerText = "Thank you! We'll be in touch.";
+                    status.classList.remove('hidden', 'text-red-600');
+                    status.classList.add('text-green-600');
+                }
+                alert("Thank you! Your message has been sent.");
+
+            } catch (err) {
+                if(status) {
+                    status.innerText = "Error. Please try again later.";
+                    status.classList.remove('hidden');
+                    status.classList.add('text-red-600');
+                }
+            } finally {
+                if(btn) btn.innerText = "Submit Request";
             }
-            alert("Thank you! Your message has been sent.");
-
-        } catch (err) {
-            if(status) {
-                status.innerText = "Error. Please try again later.";
-                status.classList.remove('hidden');
-                status.classList.add('text-red-600');
-            }
-        } finally {
-            if(btn) btn.innerText = "Submit Request";
-        }
+        });
     });
 </script>

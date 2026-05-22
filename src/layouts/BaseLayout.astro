@@ -5,79 +5,80 @@ import Footer from "@components/Footer/Footer.astro";
 import Nav from "@components/Nav/Nav.astro";
 import BaseHead from "@layouts/BaseHead.astro";
 
-// heroImage and authorData are defined on blog posts
-// authorData could also be defined on the about author page
 interface Props {
-	type?: "general";
-	navStartStyle?: "default" | "white";
-	title: string;
-	description: string;
-	heroImage?: ImageMetadata;
-	noindex?: boolean; // you need to opt-in to no indexing, as it hides the page from search engines
+    type?: "general";
+    navStartStyle?: "default" | "white";
+    title: string;
+    description: string;
+    heroImage?: ImageMetadata;
+    noindex?: boolean;
 }
 
 const {
-	type = "general",
-	navStartStyle = "default",
-	title,
-	description,
-	heroImage,
-	noindex = false,
+    type = "general",
+    navStartStyle = "default",
+    title,
+    description,
+    heroImage,
+    noindex = false,
 } = Astro.props as Props;
 ---
 
 <!doctype html>
 <html lang="en" transition:animate="fade">
-	<head>
+    <head>
+        <BaseHead
+            type={type}
+            title={title}
+            description={description}
+            image={heroImage ? heroImage : undefined}
+            noindex={noindex}
+        />
 
-		<BaseHead
-			type={type}
-			title={title}
-			description={description}
-			image={heroImage ? heroImage : undefined}
-			noindex={noindex}
-		/>
-			<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-YPEJ0NE4SZ"></script>
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-YPEJ0NE4SZ');
-    </script>
-	<!-- Meta Pixel Code -->
-<script is:inline>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '4812597255691349');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=4812597255691349&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  
-  <!-- Pulling in Satoshi-like modernism (via DM Sans/Tenor) -->
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Tenor+Sans&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+        <!-- Font Optimizations - Kept in Head but optimized with display=swap -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Tenor+Sans&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+    </head>
 
-	</head>
+    <body id="body" class="bg-base-50 text-base-900">
+        <div class="min-h-[100lvh]">
+            <Nav startStyle={navStartStyle} />
+            <main>
+                <slot />
+            </main>
+        </div>
+        <Footer />
 
+        <!-- ======================================================= -->
+        <!-- PERFORMANCE EASY WIN: Third Party Tracking moved to bottom -->
+        <!-- ======================================================= -->
+        
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-YPEJ0NE4SZ"></script>
+        <script is:inline>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-YPEJ0NE4SZ');
+        </script>
 
-	<body id="body" class="bg-base-50 text-base-900">
-		<div class="min-h-[100lvh]">
-			<Nav startStyle={navStartStyle} />
-			<main>
-				<slot />
-			</main>
-		</div>
-		<Footer />
-	</body>
+        <!-- Meta Pixel Code -->
+        <script is:inline>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '4812597255691349');
+        fbq('track', 'PageView');
+        </script>
+        <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=4812597255691349&ev=PageView&noscript=1"
+        /></noscript>
+        <!-- End Meta Pixel Code -->
+    </body>
 </html>

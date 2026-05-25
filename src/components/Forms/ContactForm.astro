@@ -67,18 +67,19 @@ import Button from "@components/Button/Button.astro";
 </form>
 
 <script>
-    // 1. Wrap the entire listener setup inside the page-load event
+    // 1. Declare fbq at the top so TypeScript doesn't complain
+    declare var fbq: Function;
+
     document.addEventListener('astro:page-load', () => {
         const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbw-qfBOVsI6tWygsjZAZ1WBM04M2pq7v0QjSlwktXuCFwz_7YnJxklMTgPf8O_TOjJV/exec';
         const form = document.getElementById('contact-form') as HTMLFormElement;
         const status = document.getElementById('form-status');
         const btn = form?.querySelector('button[type="submit"]') as HTMLButtonElement;
 
-        // If the form doesn't exist on the current page, exit early safely
         if (!form) return;
 
         form.addEventListener('submit', async (e) => {
-            e.preventDefault(); // Now guaranteed to run every time!
+            e.preventDefault();
             if(btn) btn.innerText = "Sending...";
 
             const formData = new FormData(form);
@@ -99,10 +100,11 @@ import Button from "@components/Button/Button.astro";
                     body: JSON.stringify(payload)
                 });
    
-// To this:
-if (typeof (window as any).fbq !== 'undefined') {
-    (window as any).fbq('track', 'Lead');
-}
+                // 2. FIXED: Cleaned syntax and direct global execution call
+                if (typeof fbq !== 'undefined') {
+                    fbq('track', 'Lead');
+                }
+
                 form.reset();
                 
                 if(status) {

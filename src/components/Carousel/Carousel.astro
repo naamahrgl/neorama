@@ -5,135 +5,195 @@ interface Props {
 const { options = {} } = Astro.props;
 ---
 
-<div class="embla">
+<div class="embla relative">
   <div class="embla__viewport overflow-hidden">
     <div class="embla__container flex">
       <slot />
     </div>
   </div>
 
+  <!-- arrows -->
+  <button class="embla__prev" aria-label="Previous slide" type="button">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M15 18l-6-6 6-6" />
+    </svg>
+  </button>
+  <button class="embla__next" aria-label="Next slide" type="button">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M9 18l6-6-6-6" />
+    </svg>
+  </button>
+
   <!-- dots -->
   <div class="embla__dots mt-6 flex justify-center gap-2"></div>
 </div>
+
 <script>
   import EmblaCarousel from "embla-carousel";
 
-  const emblaNodes =
-    document.querySelectorAll<HTMLElement>(".embla");
+  const emblaNodes = document.querySelectorAll<HTMLElement>(".embla");
 
   emblaNodes.forEach((root) => {
-
-    const viewport =
-      root.querySelector<HTMLElement>(
-        ".embla__viewport"
-      );
-
-    const dotsContainer =
-      root.querySelector<HTMLElement>(
-        ".embla__dots"
-      );
+    const viewport = root.querySelector<HTMLElement>(".embla__viewport");
+    const dotsContainer = root.querySelector<HTMLElement>(".embla__dots");
+    const prevBtn = root.querySelector<HTMLButtonElement>(".embla__prev");
+    const nextBtn = root.querySelector<HTMLButtonElement>(".embla__next");
 
     if (!viewport || !dotsContainer) return;
 
-    const embla =
-      EmblaCarousel(viewport, {
-        loop: false,
-        align: "center"
-      });
+    const embla = EmblaCarousel(viewport, {
+      loop: false,
+      align: "center",
+    });
 
+    // arrows: disable at the start/end instead of hiding, so layout doesn't jump
+    const updateArrows = () => {
+      if (prevBtn) prevBtn.disabled = !embla.canScrollPrev();
+      if (nextBtn) nextBtn.disabled = !embla.canScrollNext();
+    };
+
+    prevBtn?.addEventListener("click", () => embla.scrollPrev());
+    nextBtn?.addEventListener("click", () => embla.scrollNext());
+
+    embla.on("select", updateArrows);
+    embla.on("reInit", updateArrows);
+    updateArrows();
+
+    // dots
     const buildDots = () => {
+      const snaps = embla.scrollSnapList();
 
-      const snaps =
-        embla.scrollSnapList();
+      dotsContainer.innerHTML = snaps
+        .map(
+          (_, i) =>
+            `<button class="embla__dot" data-index="${i}" aria-label="Go to slide ${i + 1}"></button>`
+        )
+        .join("");
 
-      dotsContainer.innerHTML =
-        snaps.map((_, i) => `
-          <button
-            class="embla__dot"
-            data-index="${i}"
-          ></button>
-        `).join("");
-
-      const dots =
-        dotsContainer.querySelectorAll(".embla__dot");
+      const dots = dotsContainer.querySelectorAll<HTMLButtonElement>(".embla__dot");
 
       dots.forEach((dot, index) => {
-
-        dot.addEventListener(
-          "click",
-          () => embla.scrollTo(index)
-        );
-
+        dot.addEventListener("click", () => embla.scrollTo(index));
       });
 
       const updateDots = () => {
-
         dots.forEach((dot, i) => {
-
-          dot.classList.toggle(
-            "is-active",
-            i === embla.selectedScrollSnap()
-          );
-
+          dot.classList.toggle("is-active", i === embla.selectedScrollSnap());
         });
-
       };
 
       embla.on("select", updateDots);
-
       updateDots();
-
     };
 
     buildDots();
 
-    /* update when screen size changes */
-
-    window.addEventListener(
-      "resize",
-      () => {
-
-        embla.reInit();
-
-        buildDots();
-
-      }
-    );
-
+    // Only reinit when width actually changes. Mobile browsers fire "resize"
+    // when the address bar shows/hides during scroll (height-only change),
+    // which was causing the carousel to reset/break on mobile.
+    let lastWidth = viewport.clientWidth;
+    window.addEventListener("resize", () => {
+      const newWidth = viewport.clientWidth;
+      if (newWidth === lastWidth) return;
+      lastWidth = newWidth;
+      embla.reInit();
+      buildDots();
+      updateArrows();
+    });
   });
 </script>
 
 <style>
-.embla__container > * {
-  flex: 0 0 100%;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-@media (min-width: 768px) {
-  .embla__container > * {
-    flex: 0 0 50%;
+  .embla {
+    position: relative;
   }
-}
 
-@media (min-width: 1024px) {
-  .embla__container > * {
-    flex: 0 0 33.333%;
+  .embla__container {
+    display: flex;
+    align-items: stretch; /* every slide matches the tallest one */
   }
-}
 
-/* dots */
+  /* Slide sizing lives ONLY here. Do not also add horizontal padding
+     to the slide wrapper in the consuming component, or you'll get
+     double gutters. */
+  .embla__container > * {
+    flex: 0 0 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
 
-.embla__dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: #d1d5db;
-  transition: 0.3s;
-}
+  @media (min-width: 768px) {
+    .embla__container > * {
+      flex: 0 0 50%;
+    }
+  }
 
-.embla__dot.is-active {
-  background: #111827;
-  transform: scale(1.2);
-}
+  @media (min-width: 1024px) {
+    .embla__container > * {
+      flex: 0 0 33.3333%;
+    }
+  }
+
+  /* arrows */
+  .embla__prev,
+  .embla__next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    color: #111827;
+    z-index: 10;
+    transition:
+      opacity 0.2s,
+      background 0.2s;
+  }
+
+  .embla__prev {
+    left: 4px;
+  }
+
+  .embla__next {
+    right: 4px;
+  }
+
+  @media (min-width: 768px) {
+    .embla__prev {
+      left: -20px;
+    }
+    .embla__next {
+      right: -20px;
+    }
+  }
+
+  .embla__prev:disabled,
+  .embla__next:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .embla__prev:not(:disabled):hover,
+  .embla__next:not(:disabled):hover {
+    background: #f3f4f6;
+  }
+
+  /* dots */
+  .embla__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: #d1d5db;
+    transition: 0.3s;
+  }
+
+  .embla__dot.is-active {
+    background: #111827;
+    transform: scale(1.2);
+  }
 </style>
